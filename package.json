@@ -24,6 +24,7 @@
     "url": "https://github.com/eflexsystems/ramda-helpers/issues"
   },
   "homepage": "https://github.com/eflexsystems/ramda-helpers#readme",
+  "sideEffects": false,
   "devDependencies": {
     "chai": "^4.3.6",
     "eslint": "^8.11.0",
