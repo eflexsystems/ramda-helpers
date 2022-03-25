@@ -1,0 +1,42 @@
+{
+  "name": "ramda-helpers",
+  "version": "1.0.0",
+  "description": "A collection of ramda helper functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "lint": "eslint .",
+    "prettier": "prettier --write .",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eflexsystems/ramda-helpers.git"
+  },
+  "keywords": [
+    "ramda",
+    "functional",
+    "utility"
+  ],
+  "author": "eFlex Systems",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eflexsystems/ramda-helpers/issues"
+  },
+  "homepage": "https://github.com/eflexsystems/ramda-helpers#readme",
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "mocha": "^9.2.2",
+    "prettier": "^2.6.1"
+  },
+  "dependencies": {
+    "ramda": "^0.28.0"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
+}
