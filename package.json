@@ -1,6 +1,6 @@
 {
   "name": "@eflexsystems/ramda-helpers",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A collection of ramda helper functions",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   "bugs": {
     "url": "https://github.com/eflexsystems/ramda-helpers/issues"
   },
-  "homepage": "https://github.com/eflexsystems/ramda-helpers#readme",
+  "homepage": "https://eflexsystems.github.io/ramda-helpers/",
   "sideEffects": false,
   "devDependencies": {
     "chai": "^4.3.6",
