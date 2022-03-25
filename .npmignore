@@ -3,3 +3,4 @@
 .eslintrc.js
 .gitignore
 test.js
+docs/

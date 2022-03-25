@@ -1,0 +1,25 @@
+{
+  "tags": {
+    "allowUnknownTags": false
+  },
+  "source": {
+    "include": ["index.js"],
+    "includePattern": "index.js$"
+  },
+  "plugins": ["plugins/markdown"],
+  "opts": {
+    "template": "node_modules/docdash",
+    "encoding": "utf8",
+    "destination": "docs/",
+    "recurse": true
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  },
+  "docdash": {
+    "sort": true,
+    "search": true,
+    "navLevel": [0]
+  }
+}
