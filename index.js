@@ -102,8 +102,8 @@ exports.dpPluck = curry((field, array) => map(exports.dp(field), array));
  *
  * @func
  * @param {String} leftComparedPath The dotted path to compare on each leftCollection object.
- * @param {String} leftReplacedPath The dotted path to replace in leftCollection with the matching rightCollection value
  * @param {String} rightComparedPath The dotted path to compare to leftComparedPath on each rightCollection object.
+ * @param {String} leftReplacedPath The dotted path to replace in leftCollection with the matching rightCollection value
  * @param {Array} rightCollection The right side of the join
  * @param {Array} leftCollection The left side of the join
  * @return {Array} A copy of leftCollection where leftReplacedPath has been replaced with the matching value in rightCollection
