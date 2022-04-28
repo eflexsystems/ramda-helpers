@@ -14,7 +14,7 @@ const {
 } = require("./index");
 const { describe, it } = require("mocha");
 
-describe("leftJoin", function () {
+describe.only("leftJoin", function () {
   it("replaces the collectionKeys in the collection with the joined object", function () {
     const collection = [
       {

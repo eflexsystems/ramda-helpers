@@ -182,27 +182,21 @@ exports.leftJoin = curry(
  * maxOf(prop("a"), [{ a: 2 }, { a: 1 }, { a: null }]); //=> 2
  *
  */
-exports.maxOf = curry((func, collection) => {
-  const result = reduce(
+exports.maxOf = curry((func, collection) =>
+  reduce(
     (largest, curr) => {
       const val = func(curr);
 
-      if (val != null && val > largest) {
+      if (val != null && (largest == null || val > largest)) {
         return val;
       } else {
         return largest;
       }
     },
-    -Infinity,
+    null,
     collection
-  );
-
-  if (result === -Infinity) {
-    return null;
-  } else {
-    return result;
-  }
-});
+  )
+);
 
 /**
  * Returns the smallest value for a function applied to a collection of objects
@@ -216,27 +210,21 @@ exports.maxOf = curry((func, collection) => {
  * minOf(prop("a"), [{ a: 2 }, { a: 1 }, { a: null }]); //=> 1
  *
  */
-exports.minOf = curry((func, collection) => {
-  const result = reduce(
+exports.minOf = curry((func, collection) =>
+  reduce(
     (smallest, curr) => {
       const val = func(curr);
 
-      if (val != null && val < smallest) {
+      if (val != null && (smallest == null || val < smallest)) {
         return val;
       } else {
         return smallest;
       }
     },
-    Infinity,
+    null,
     collection
-  );
-
-  if (result === Infinity) {
-    return null;
-  } else {
-    return result;
-  }
-});
+  )
+);
 
 /**
  * Invokes a function on each object in a collection and returns each result
