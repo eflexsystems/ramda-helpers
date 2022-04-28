@@ -11,10 +11,11 @@ const {
   minOf,
   invokeMap,
   upperFirst,
+  intoArray,
 } = require("./index");
 const { describe, it } = require("mocha");
 
-describe.only("leftJoin", function () {
+describe("leftJoin", function () {
   it("replaces the collectionKeys in the collection with the joined object", function () {
     const collection = [
       {
@@ -364,5 +365,16 @@ describe("upperFirst", function () {
     const result = upperFirst("test");
 
     expect(result).to.equal("Test");
+  });
+});
+
+describe("intoArray", function () {
+  it("is a shorthand for into([], compose(), arr ?? [])", function () {
+    const result = intoArray(
+      map((i) => i + 1),
+      map((i) => i * 2)
+    )([1, 2]);
+
+    expect(result).to.deep.equal([4, 6]);
   });
 });

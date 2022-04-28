@@ -15,6 +15,7 @@ const {
   split,
   toUpper,
   useWith,
+  into,
 } = require("ramda");
 
 /**
@@ -255,3 +256,17 @@ exports.invokeMap = curry((funcName, collection) =>
  *
  */
 exports.upperFirst = compose(join(""), over(lensIndex(0), toUpper));
+
+/**
+ * Is a shorthand for into([], compose(), arr ?? [])
+ *
+ * @func
+ * @param {Array} The array to transform
+ * @param {Function...} A list of functions to transform the input array
+ * @return {Array} The transformed input array
+ * @example
+ *
+ * intoArray(map(i => i + 1), map(i => i * 2), [1, 2])
+ *
+ */
+exports.intoArray = (...args) => into([], compose(...args));
