@@ -16,8 +16,8 @@ const {
   toUpper,
   useWith,
   into,
-  sum,
-  pipe,
+  transduce,
+  add,
 } = require("ramda");
 
 /**
@@ -273,6 +273,18 @@ exports.upperFirst = compose(join(""), over(lensIndex(0), toUpper));
  */
 exports.intoArray = (...args) => into([], compose(...args));
 
-exports.sumBy = curry((func, collection) => {
-  return pipe(map(func), sum)(collection);
-});
+/**
+ * Sums the mapped result of an array
+ *
+ * @func
+ * @param {Function} func The function to map on each object in the collection.
+ * @param {Array} collection The collection to sum
+ * @return {Number} The sum of the mapped values
+ * @example
+ *
+ * sumBy(prop("a"), [{ a: 1 }, { a: 3 }]); //=> 4
+ *
+ */
+exports.sumBy = curry((func, collection) =>
+  transduce(map(func), add, 0, collection)
+);
