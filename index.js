@@ -248,7 +248,7 @@ exports.invokeMap = curry((funcName, collection) =>
  * Uppercases the first letter of a string
  *
  * @func
- * @param {String} The string to uppercase the first letter of
+ * @param {String} str The string to uppercase the first letter of
  * @return {String} The input string with its first letter uppercased
  * @example
  *
@@ -261,8 +261,8 @@ exports.upperFirst = compose(join(""), over(lensIndex(0), toUpper));
  * Is a shorthand for into([], compose(), arr ?? [])
  *
  * @func
- * @param {Array} The array to transform
- * @param {Function...} A list of functions to transform the input array
+ * @param {Array} transformedArray The array to transform
+ * @param {Function[]} transformers A list of functions to transform the input array
  * @return {Array} The transformed input array
  * @example
  *

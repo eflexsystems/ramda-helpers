@@ -12,6 +12,7 @@
     <link type="text/css" rel="stylesheet" href="styles/prettify.css" />
     <link type="text/css" rel="stylesheet" href="styles/jsdoc.css" />
     <script src="scripts/nav.js" defer></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
@@ -32,6 +33,7 @@
         <li><a href="global.html#dp">dp</a></li>
         <li><a href="global.html#dpEq">dpEq</a></li>
         <li><a href="global.html#dpPluck">dpPluck</a></li>
+        <li><a href="global.html#intoArray">intoArray</a></li>
         <li><a href="global.html#invokeMap">invokeMap</a></li>
         <li><a href="global.html#leftJoin">leftJoin</a></li>
         <li><a href="global.html#leftJoinAs">leftJoinAs</a></li>
@@ -63,28 +65,34 @@
           </h4>
 
           <dl class="details">
+            <dt class="tag-description">Description:</dt>
+            <dd class="tag-description">
+              <ul class="dummy">
+                <li>
+                  <p>
+                    Makes a shallow clone of an object, setting or overriding
+                    the nodes required to create the given dotted path, and
+                    placing the specific value at the tail end of that dotted
+                    path. Note that this copies and flattens prototype
+                    properties onto the new object as well. All non-primitive
+                    properties are copied by reference.
+                  </p>
+                </li>
+              </ul>
+            </dd>
+
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
                 <li>
                   <a href="index.js.html">index.js</a>,
-                  <a href="index.js.html#line77">line 77</a>
+                  <a href="index.js.html#line78">line 78</a>
                 </li>
               </ul>
             </dd>
           </dl>
 
-          <div class="description usertext">
-            <p>
-              Makes a shallow clone of an object, setting or overriding the
-              nodes required to create the given dotted path, and placing the
-              specific value at the tail end of that dotted path. Note that this
-              copies and flattens prototype properties onto the new object as
-              well. All non-primitive properties are copied by reference.
-            </p>
-          </div>
-
-          <h5>Example</h5>
+          <h5 class="h5-examples">Example</h5>
 
           <pre
             class="prettyprint"
@@ -93,7 +101,7 @@
 // Any missing or non-object keys in path will be overridden
 assocDp('a.b.c', 42, {a: 5}); //=> {a: {b: {c: 42}}}</code></pre>
 
-          <h5>Parameters:</h5>
+          <h5 class="h5-parameters">Parameters:</h5>
 
           <table class="params">
             <thead>
@@ -139,7 +147,7 @@ assocDp('a.b.c', 42, {a: 5}); //=> {a: {b: {c: 42}}}</code></pre>
             </tbody>
           </table>
 
-          <h5>Returns:</h5>
+          <h5 class="h5-returns">Returns:</h5>
 
           <div class="param-desc">
             <p>
@@ -162,29 +170,34 @@ assocDp('a.b.c', 42, {a: 5}); //=> {a: {b: {c: 42}}}</code></pre>
           </h4>
 
           <dl class="details">
+            <dt class="tag-description">Description:</dt>
+            <dd class="tag-description">
+              <ul class="dummy">
+                <li>
+                  <p>Retrieve the value at a given nested dotted path.</p>
+                </li>
+              </ul>
+            </dd>
+
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
                 <li>
                   <a href="index.js.html">index.js</a>,
-                  <a href="index.js.html#line34">line 34</a>
+                  <a href="index.js.html#line35">line 35</a>
                 </li>
               </ul>
             </dd>
           </dl>
 
-          <div class="description usertext">
-            <p>Retrieve the value at a given nested dotted path.</p>
-          </div>
-
-          <h5>Example</h5>
+          <h5 class="h5-examples">Example</h5>
 
           <pre class="prettyprint"><code>dp("a.b", {a: {b: 2}}); //=> 2
 dp("a.b.", {c: {b: 2}}); //=> undefined
 dp("a.b.0", {a: {b: [1, 2, 3]}}); //=> 1
 dp("a.b.-2", {a: {b: [1, 2, 3]}}); //=> 2</code></pre>
 
-          <h5>Parameters:</h5>
+          <h5 class="h5-parameters">Parameters:</h5>
 
           <table class="params">
             <thead>
@@ -222,7 +235,7 @@ dp("a.b.-2", {a: {b: [1, 2, 3]}}); //=> 2</code></pre>
             </tbody>
           </table>
 
-          <h5>Returns:</h5>
+          <h5 class="h5-returns">Returns:</h5>
 
           <div class="param-desc">
             <p>The data at <code>path</code>.</p>
@@ -242,26 +255,31 @@ dp("a.b.-2", {a: {b: [1, 2, 3]}}); //=> 2</code></pre>
           </h4>
 
           <dl class="details">
+            <dt class="tag-description">Description:</dt>
+            <dd class="tag-description">
+              <ul class="dummy">
+                <li>
+                  <p>
+                    Determines whether a dotted path on an object has a specific
+                    value, in <a href="#equals"><code>R.equals</code></a> terms.
+                    Most likely used to filter a list.
+                  </p>
+                </li>
+              </ul>
+            </dd>
+
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
                 <li>
                   <a href="index.js.html">index.js</a>,
-                  <a href="index.js.html#line56">line 56</a>
+                  <a href="index.js.html#line57">line 57</a>
                 </li>
               </ul>
             </dd>
           </dl>
 
-          <div class="description usertext">
-            <p>
-              Determines whether a dotted path on an object has a specific
-              value, in <a href="#equals"><code>R.equals</code></a> terms. Most
-              likely used to filter a list.
-            </p>
-          </div>
-
-          <h5>Example</h5>
+          <h5 class="h5-examples">Example</h5>
 
           <pre
             class="prettyprint"
@@ -272,7 +290,7 @@ const users = [ user1, user2, user3 ];
 const isFamous = dpEq('address.zipCode', 90210);
 R.filter(isFamous, users); //=> [ user1 ]</code></pre>
 
-          <h5>Parameters:</h5>
+          <h5 class="h5-parameters">Parameters:</h5>
 
           <table class="params">
             <thead>
@@ -324,7 +342,7 @@ R.filter(isFamous, users); //=> [ user1 ]</code></pre>
             </tbody>
           </table>
 
-          <h5>Returns:</h5>
+          <h5 class="h5-returns">Returns:</h5>
 
           <div class="param-desc">
             <p>
@@ -347,39 +365,45 @@ R.filter(isFamous, users); //=> [ user1 ]</code></pre>
           </h4>
 
           <dl class="details">
+            <dt class="tag-description">Description:</dt>
+            <dd class="tag-description">
+              <ul class="dummy">
+                <li>
+                  <p>
+                    Returns a new list by plucking the same dotted path off all
+                    objects in the list supplied.
+                  </p>
+                  <p>
+                    <code>pluck</code> will work on any
+                    <a
+                      href="https://github.com/fantasyland/fantasy-land#functor"
+                      >functor</a
+                    >
+                    in addition to arrays, as it is equivalent to
+                    <code>R.map(dp(k), f)</code>.
+                  </p>
+                </li>
+              </ul>
+            </dd>
+
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
                 <li>
                   <a href="index.js.html">index.js</a>,
-                  <a href="index.js.html#line96">line 96</a>
+                  <a href="index.js.html#line97">line 97</a>
                 </li>
               </ul>
             </dd>
           </dl>
 
-          <div class="description usertext">
-            <p>
-              Returns a new list by plucking the same dotted path off all
-              objects in the list supplied.
-            </p>
-            <p>
-              <code>pluck</code> will work on any
-              <a href="https://github.com/fantasyland/fantasy-land#functor"
-                >functor</a
-              >
-              in addition to arrays, as it is equivalent to
-              <code>R.map(dp(k), f)</code>.
-            </p>
-          </div>
-
-          <h5>Example</h5>
+          <h5 class="h5-examples">Example</h5>
 
           <pre
             class="prettyprint"
           ><code>dpPluck('name.first', [{name: { first: 'fred' }}, {name: { first: 'wilma'} }]); //=> ['fred', 'wilma']</code></pre>
 
-          <h5>Parameters:</h5>
+          <h5 class="h5-parameters">Parameters:</h5>
 
           <table class="params">
             <thead>
@@ -419,10 +443,94 @@ R.filter(isFamous, users); //=> [ user1 ]</code></pre>
             </tbody>
           </table>
 
-          <h5>Returns:</h5>
+          <h5 class="h5-returns">Returns:</h5>
 
           <div class="param-desc">
             <p>The list of values for the given key.</p>
+          </div>
+
+          <dl class="param-type">
+            <dt>Type</dt>
+            <dd>
+              <span class="param-type">Array</span>
+            </dd>
+          </dl>
+
+          <h4 class="name" id="intoArray">
+            <span class="type-signature"></span>intoArray<span class="signature"
+              >(transformedArray, transformers)</span
+            ><span class="type-signature"> &rarr; {Array}</span>
+          </h4>
+
+          <dl class="details">
+            <dt class="tag-description">Description:</dt>
+            <dd class="tag-description">
+              <ul class="dummy">
+                <li>
+                  <p>Is a shorthand for into([], compose(), arr ?? [])</p>
+                </li>
+              </ul>
+            </dd>
+
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li>
+                  <a href="index.js.html">index.js</a>,
+                  <a href="index.js.html#line272">line 272</a>
+                </li>
+              </ul>
+            </dd>
+          </dl>
+
+          <h5 class="h5-examples">Example</h5>
+
+          <pre
+            class="prettyprint"
+          ><code>intoArray(map(i => i + 1), map(i => i * 2), [1, 2])</code></pre>
+
+          <h5 class="h5-parameters">Parameters:</h5>
+
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+
+                <th>Type</th>
+
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td class="name"><code>transformedArray</code></td>
+
+                <td class="type">
+                  <span class="param-type">Array</span>
+                </td>
+
+                <td class="description last"><p>The array to transform</p></td>
+              </tr>
+
+              <tr>
+                <td class="name"><code>transformers</code></td>
+
+                <td class="type">
+                  <span class="param-type">Array.&lt;function()></span>
+                </td>
+
+                <td class="description last">
+                  <p>A list of functions to transform the input array</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h5 class="h5-returns">Returns:</h5>
+
+          <div class="param-desc">
+            <p>The transformed input array</p>
           </div>
 
           <dl class="param-type">
@@ -439,32 +547,37 @@ R.filter(isFamous, users); //=> [ user1 ]</code></pre>
           </h4>
 
           <dl class="details">
+            <dt class="tag-description">Description:</dt>
+            <dd class="tag-description">
+              <ul class="dummy">
+                <li>
+                  <p>
+                    Invokes a function on each object in a collection and
+                    returns each result
+                  </p>
+                </li>
+              </ul>
+            </dd>
+
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
                 <li>
                   <a href="index.js.html">index.js</a>,
-                  <a href="index.js.html#line254">line 254</a>
+                  <a href="index.js.html#line243">line 243</a>
                 </li>
               </ul>
             </dd>
           </dl>
 
-          <div class="description usertext">
-            <p>
-              Invokes a function on each object in a collection and returns each
-              result
-            </p>
-          </div>
-
-          <h5>Example</h5>
+          <h5 class="h5-examples">Example</h5>
 
           <pre
             class="prettyprint"
           ><code>const objs = [{ test() { return "a" } }, { test() { return "b" } }];
 invokeMap("test", objs); //=> ["a", "b"]</code></pre>
 
-          <h5>Parameters:</h5>
+          <h5 class="h5-parameters">Parameters:</h5>
 
           <table class="params">
             <thead>
@@ -506,7 +619,7 @@ invokeMap("test", objs); //=> ["a", "b"]</code></pre>
             </tbody>
           </table>
 
-          <h5>Returns:</h5>
+          <h5 class="h5-returns">Returns:</h5>
 
           <div class="param-desc">
             <p>
@@ -530,27 +643,32 @@ invokeMap("test", objs); //=> ["a", "b"]</code></pre>
           </h4>
 
           <dl class="details">
+            <dt class="tag-description">Description:</dt>
+            <dd class="tag-description">
+              <ul class="dummy">
+                <li>
+                  <p>
+                    Returns a new list by where each leftCollection object has
+                    its leftComparedPath replaced with the object from
+                    rightCollection that has a rightComparedPath value equal to
+                    the value at leftComparedPath
+                  </p>
+                </li>
+              </ul>
+            </dd>
+
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
                 <li>
                   <a href="index.js.html">index.js</a>,
-                  <a href="index.js.html#line162">line 162</a>
+                  <a href="index.js.html#line163">line 163</a>
                 </li>
               </ul>
             </dd>
           </dl>
 
-          <div class="description usertext">
-            <p>
-              Returns a new list by where each leftCollection object has its
-              leftComparedPath replaced with the object from rightCollection
-              that has a rightComparedPath value equal to the value at
-              leftComparedPath
-            </p>
-          </div>
-
-          <h5>Example</h5>
+          <h5 class="h5-examples">Example</h5>
 
           <pre
             class="prettyprint"
@@ -558,7 +676,7 @@ invokeMap("test", objs); //=> ["a", "b"]</code></pre>
 const rightCollection = [{ id: "a", c: 2 }];
 const result = leftJoin("a", "id", rightCollection, leftCollection); //=> [{ b: 2, a: { id: "a", c: 2, } }]</code></pre>
 
-          <h5>Parameters:</h5>
+          <h5 class="h5-parameters">Parameters:</h5>
 
           <table class="params">
             <thead>
@@ -628,7 +746,7 @@ const result = leftJoin("a", "id", rightCollection, leftCollection); //=> [{ b: 
             </tbody>
           </table>
 
-          <h5>Returns:</h5>
+          <h5 class="h5-returns">Returns:</h5>
 
           <div class="param-desc">
             <p>
@@ -653,27 +771,32 @@ const result = leftJoin("a", "id", rightCollection, leftCollection); //=> [{ b: 
           </h4>
 
           <dl class="details">
+            <dt class="tag-description">Description:</dt>
+            <dd class="tag-description">
+              <ul class="dummy">
+                <li>
+                  <p>
+                    Returns a new list by where each leftCollection object has
+                    its leftReplacedPath replaced with the object from
+                    rightCollection that has a rightComparedPath value equal to
+                    the value at leftComparedPath
+                  </p>
+                </li>
+              </ul>
+            </dd>
+
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
                 <li>
                   <a href="index.js.html">index.js</a>,
-                  <a href="index.js.html#line117">line 117</a>
+                  <a href="index.js.html#line118">line 118</a>
                 </li>
               </ul>
             </dd>
           </dl>
 
-          <div class="description usertext">
-            <p>
-              Returns a new list by where each leftCollection object has its
-              leftReplacedPath replaced with the object from rightCollection
-              that has a rightComparedPath value equal to the value at
-              leftComparedPath
-            </p>
-          </div>
-
-          <h5>Example</h5>
+          <h5 class="h5-examples">Example</h5>
 
           <pre
             class="prettyprint"
@@ -681,7 +804,7 @@ const result = leftJoin("a", "id", rightCollection, leftCollection); //=> [{ b: 
 const rightCollection = [{ id: "a", c: 2 }];
 const result = leftJoinAs("a", "id", "joined", rightCollection, leftCollection); //=> [{ a: "a", b: 2, joined: { id: "a", c: 2, } }]</code></pre>
 
-          <h5>Parameters:</h5>
+          <h5 class="h5-parameters">Parameters:</h5>
 
           <table class="params">
             <thead>
@@ -765,7 +888,7 @@ const result = leftJoinAs("a", "id", "joined", rightCollection, leftCollection);
             </tbody>
           </table>
 
-          <h5>Returns:</h5>
+          <h5 class="h5-returns">Returns:</h5>
 
           <div class="param-desc">
             <p>
@@ -788,31 +911,36 @@ const result = leftJoinAs("a", "id", "joined", rightCollection, leftCollection);
           </h4>
 
           <dl class="details">
+            <dt class="tag-description">Description:</dt>
+            <dd class="tag-description">
+              <ul class="dummy">
+                <li>
+                  <p>
+                    Returns the largest value for a function applied to a
+                    collection of objects
+                  </p>
+                </li>
+              </ul>
+            </dd>
+
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
                 <li>
                   <a href="index.js.html">index.js</a>,
-                  <a href="index.js.html#line185">line 185</a>
+                  <a href="index.js.html#line186">line 186</a>
                 </li>
               </ul>
             </dd>
           </dl>
 
-          <div class="description usertext">
-            <p>
-              Returns the largest value for a function applied to a collection
-              of objects
-            </p>
-          </div>
-
-          <h5>Example</h5>
+          <h5 class="h5-examples">Example</h5>
 
           <pre
             class="prettyprint"
           ><code>maxOf(prop("a"), [{ a: 2 }, { a: 1 }, { a: null }]); //=> 2</code></pre>
 
-          <h5>Parameters:</h5>
+          <h5 class="h5-parameters">Parameters:</h5>
 
           <table class="params">
             <thead>
@@ -850,7 +978,7 @@ const result = leftJoinAs("a", "id", "joined", rightCollection, leftCollection);
             </tbody>
           </table>
 
-          <h5>Returns:</h5>
+          <h5 class="h5-returns">Returns:</h5>
 
           <div class="param-desc">
             <p>
@@ -873,31 +1001,36 @@ const result = leftJoinAs("a", "id", "joined", rightCollection, leftCollection);
           </h4>
 
           <dl class="details">
+            <dt class="tag-description">Description:</dt>
+            <dd class="tag-description">
+              <ul class="dummy">
+                <li>
+                  <p>
+                    Returns the smallest value for a function applied to a
+                    collection of objects
+                  </p>
+                </li>
+              </ul>
+            </dd>
+
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
                 <li>
                   <a href="index.js.html">index.js</a>,
-                  <a href="index.js.html#line219">line 219</a>
+                  <a href="index.js.html#line214">line 214</a>
                 </li>
               </ul>
             </dd>
           </dl>
 
-          <div class="description usertext">
-            <p>
-              Returns the smallest value for a function applied to a collection
-              of objects
-            </p>
-          </div>
-
-          <h5>Example</h5>
+          <h5 class="h5-examples">Example</h5>
 
           <pre
             class="prettyprint"
           ><code>minOf(prop("a"), [{ a: 2 }, { a: 1 }, { a: null }]); //=> 1</code></pre>
 
-          <h5>Parameters:</h5>
+          <h5 class="h5-parameters">Parameters:</h5>
 
           <table class="params">
             <thead>
@@ -935,7 +1068,7 @@ const result = leftJoinAs("a", "id", "joined", rightCollection, leftCollection);
             </tbody>
           </table>
 
-          <h5>Returns:</h5>
+          <h5 class="h5-returns">Returns:</h5>
 
           <div class="param-desc">
             <p>
@@ -954,33 +1087,36 @@ const result = leftJoinAs("a", "id", "joined", rightCollection, leftCollection);
           <h4 class="name" id="upperFirst">
             <span class="type-signature"></span>upperFirst<span
               class="signature"
-              >(The)</span
+              >(str)</span
             ><span class="type-signature"> &rarr; {String}</span>
           </h4>
 
           <dl class="details">
+            <dt class="tag-description">Description:</dt>
+            <dd class="tag-description">
+              <ul class="dummy">
+                <li><p>Uppercases the first letter of a string</p></li>
+              </ul>
+            </dd>
+
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source">
               <ul class="dummy">
                 <li>
                   <a href="index.js.html">index.js</a>,
-                  <a href="index.js.html#line269">line 269</a>
+                  <a href="index.js.html#line258">line 258</a>
                 </li>
               </ul>
             </dd>
           </dl>
 
-          <div class="description usertext">
-            <p>Uppercases the first letter of a string</p>
-          </div>
-
-          <h5>Example</h5>
+          <h5 class="h5-examples">Example</h5>
 
           <pre
             class="prettyprint"
           ><code>upperFirst("test"); //=> "Test"</code></pre>
 
-          <h5>Parameters:</h5>
+          <h5 class="h5-parameters">Parameters:</h5>
 
           <table class="params">
             <thead>
@@ -995,20 +1131,20 @@ const result = leftJoinAs("a", "id", "joined", rightCollection, leftCollection);
 
             <tbody>
               <tr>
-                <td class="name"><code>The</code></td>
+                <td class="name"><code>str</code></td>
 
                 <td class="type">
                   <span class="param-type">String</span>
                 </td>
 
                 <td class="description last">
-                  <p>string to uppercase the first letter of</p>
+                  <p>The string to uppercase the first letter of</p>
                 </td>
               </tr>
             </tbody>
           </table>
 
-          <h5>Returns:</h5>
+          <h5 class="h5-returns">Returns:</h5>
 
           <div class="param-desc">
             <p>The input string with its first letter uppercased</p>
@@ -1028,8 +1164,8 @@ const result = leftJoinAs("a", "id", "joined", rightCollection, leftCollection);
 
     <footer>
       Documentation generated by
-      <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a> on Tue Mar 29
-      2022 18:34:20 GMT-0400 (Eastern Daylight Time) using the
+      <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Fri Mar 10
+      2023 14:15:46 GMT-0500 (Eastern Standard Time) using the
       <a href="https://github.com/clenemt/docdash">docdash</a> theme.
     </footer>
 
