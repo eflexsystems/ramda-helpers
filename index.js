@@ -16,6 +16,8 @@ const {
   toUpper,
   useWith,
   into,
+  sum,
+  pipe,
 } = require("ramda");
 
 /**
@@ -270,3 +272,7 @@ exports.upperFirst = compose(join(""), over(lensIndex(0), toUpper));
  *
  */
 exports.intoArray = (...args) => into([], compose(...args));
+
+exports.sumBy = curry((func, collection) => {
+  return pipe(map(func), sum)(collection);
+});

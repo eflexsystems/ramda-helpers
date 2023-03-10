@@ -12,6 +12,7 @@ const {
   invokeMap,
   upperFirst,
   intoArray,
+  sumBy,
 } = require("./index");
 const { describe, it } = require("mocha");
 
@@ -376,5 +377,13 @@ describe("intoArray", function () {
     )([1, 2]);
 
     expect(result).to.deep.equal([4, 6]);
+  });
+});
+
+describe("sumBy", function () {
+  it("sums an array with a function", function () {
+    const result = sumBy(prop("a"), [{ a: 1 }, { a: 3 }]);
+
+    expect(result).to.equal(4);
   });
 });
