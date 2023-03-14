@@ -97,32 +97,24 @@ exports.assocDp = useWith(assocPath, [split(".")]);
 exports.dpPluck = curry((field, array) => map(exports.dp(field), array));
 
 /**
- * Returns a new list by where each leftCollection object has its leftReplacedPath
- * replaced with the object from rightCollection that has a
- * rightComparedPath value equal to the value at leftComparedPath
+ * Returns a list of tuples where the first item is the original item from the leftCollection
+ * and the second is is the object from the rightCollection that has a rightComparedPath value equal to the value at leftComparedPath
  *
  * @func
- * @param {String} leftComparedPath The dotted path to compare on each leftCollection object.
  * @param {String} rightComparedPath The dotted path to compare to leftComparedPath on each rightCollection object.
- * @param {String} leftReplacedPath The dotted path to replace in leftCollection with the matching rightCollection value
  * @param {Array} rightCollection The right side of the join
+ * @param {String} leftComparedPath The dotted path to compare on each leftCollection object.
  * @param {Array} leftCollection The left side of the join
- * @return {Array} A copy of leftCollection where leftReplacedPath has been replaced with the matching value in rightCollection
+ * @return {Array} A list of tuples where the first item is the original item from the leftCollection and the second is the joined item
  * @example
  *
  * const leftCollection = [{ a: "a", b: 2 }];
  * const rightCollection = [{ id: "a", c: 2 }];
- * const result = leftJoinAs("a", "id", "joined", rightCollection, leftCollection); //=> [{ a: "a", b: 2, joined: { id: "a", c: 2, } }]
+ * const result = leftJoin("id", rightCollection, "a", leftCollection); //=> [[{ a: "a", b: 2 }, { id: "a", c: 2 }]]
  *
  */
-exports.leftJoinAs = curry(
-  (
-    leftComparedPath,
-    rightComparedPath,
-    leftReplacedPath,
-    rightCollection,
-    leftCollection
-  ) => {
+exports.leftJoin = curry(
+  (rightComparedPath, rightCollection, leftComparedPath, leftCollection) => {
     const hashMap = new Map();
 
     forEach((item) => {
@@ -132,43 +124,11 @@ exports.leftJoinAs = curry(
       }
     }, rightCollection);
 
-    return map((item) =>
-      exports.assocDp(
-        leftReplacedPath,
-        hashMap.get(String(exports.dp(leftComparedPath, item))) ?? null,
-        item
-      )
-    )(leftCollection);
+    return map((item) => [
+      item,
+      hashMap.get(String(exports.dp(leftComparedPath, item))) ?? null,
+    ])(leftCollection);
   }
-);
-
-/**
- * Returns a new list by where each leftCollection object has its leftComparedPath
- * replaced with the object from rightCollection that has a
- * rightComparedPath value equal to the value at leftComparedPath
- *
- * @func
- * @param {String} leftComparedPath The dotted path to compare and replace on each leftCollection object.
- * @param {String} rightComparedPath The dotted path to compare to leftComparedPath on each rightCollection object.
- * @param {Array} rightCollection The right side of the join
- * @param {Array} leftCollection The left side of the join
- * @return {Array} A copy of leftCollection where leftReplacedPath has been replaced with the matching value in rightCollection
- * @example
- *
- * const leftCollection = [{ a: "a", b: 2 }];
- * const rightCollection = [{ id: "a", c: 2 }];
- * const result = leftJoin("a", "id", rightCollection, leftCollection); //=> [{ b: 2, a: { id: "a", c: 2, } }]
- *
- */
-exports.leftJoin = curry(
-  (leftComparedPath, rightComparedPath, rightCollection, leftCollection) =>
-    exports.leftJoinAs(
-      leftComparedPath,
-      rightComparedPath,
-      leftComparedPath,
-      rightCollection,
-      leftCollection
-    )
 );
 
 /**

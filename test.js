@@ -6,7 +6,6 @@ const {
   dpEq,
   dpPluck,
   leftJoin,
-  leftJoinAs,
   maxOf,
   minOf,
   invokeMap,
@@ -16,7 +15,7 @@ const {
 const { describe, it } = require("mocha");
 
 describe("leftJoin", function () {
-  it("replaces the collectionKeys in the collection with the joined object", function () {
+  it("returns an array of tuples with the joined objects", function () {
     const collection = [
       {
         a: "a",
@@ -43,27 +42,36 @@ describe("leftJoin", function () {
       },
     ];
 
-    const result = leftJoin("a", "id", joinedCollection, collection);
+    const result = leftJoin("id", joinedCollection, "a", collection);
 
     expect(result).to.deep.equal([
-      {
-        a: {
+      [
+        {
+          a: "a",
+          b: 2,
+        },
+        {
           id: collection[0].a,
           b: 2,
         },
-        b: 2,
-      },
-      {
-        a: null,
-        b: 3,
-      },
-      {
-        a: {
+      ],
+      [
+        {
+          a: "b",
+          b: 3,
+        },
+        null,
+      ],
+      [
+        {
+          a: "c",
+          b: 4,
+        },
+        {
           id: collection[2].a,
           b: 5,
         },
-        b: 4,
-      },
+      ],
     ]);
   });
 
@@ -97,9 +105,10 @@ describe("leftJoin", function () {
     const result = into(
       [],
       compose(
-        leftJoin("a", "id", joinedCollection),
-        map((item) => ({
-          a: item.a,
+        leftJoin("id", joinedCollection, "a"),
+        map(([item, joined]) => ({
+          item,
+          joined,
         }))
       ),
       collection
@@ -107,17 +116,29 @@ describe("leftJoin", function () {
 
     expect(result).to.deep.equal([
       {
-        a: {
-          id: collection[0].a,
+        item: {
+          a: "a",
+          b: 2,
+        },
+        joined: {
+          id: "a",
           b: 2,
         },
       },
       {
-        a: null,
+        item: {
+          a: "b",
+          b: 3,
+        },
+        joined: null,
       },
       {
-        a: {
-          id: collection[2].a,
+        item: {
+          a: "c",
+          b: 4,
+        },
+        joined: {
+          id: "c",
           b: 5,
         },
       },
@@ -125,73 +146,41 @@ describe("leftJoin", function () {
   });
 
   it("works with paths", function () {
-    const id = "a";
-
     const collection = [
       {
-        a: {
-          derp: id,
-        },
         b: 2,
+        a: {
+          derp: "a",
+        },
       },
     ];
 
     const joinedCollection = [
       {
-        herp: {
-          id,
-        },
         c: 2,
+        herp: {
+          id: "a",
+        },
       },
     ];
 
-    const result = leftJoin("a.derp", "herp.id", joinedCollection, collection);
+    const result = leftJoin("herp.id", joinedCollection, "a.derp", collection);
 
     expect(result).to.deep.equal([
-      {
-        a: {
-          derp: {
-            c: 2,
-            herp: {
-              id,
-            },
+      [
+        {
+          b: 2,
+          a: {
+            derp: "a",
           },
         },
-        b: 2,
-      },
-    ]);
-  });
-});
-
-describe("leftJoinAs", function () {
-  it("can override collectionKey as the final joined property name", function () {
-    const id = "a";
-
-    const collection = [
-      {
-        a: id,
-        b: 2,
-      },
-    ];
-
-    const joinedCollection = [
-      {
-        id,
-        c: 2,
-      },
-    ];
-
-    const result = leftJoinAs("a", "id", "derp", joinedCollection, collection);
-
-    expect(result).to.deep.equal([
-      {
-        a: id,
-        derp: {
-          id,
+        {
           c: 2,
+          herp: {
+            id: "a",
+          },
         },
-        b: 2,
-      },
+      ],
     ]);
   });
 });
