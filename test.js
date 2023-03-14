@@ -1,16 +1,6 @@
 "use strict";
 const { expect } = require("chai");
-const {
-  reject,
-  propEq,
-  add,
-  transduce,
-  find,
-  prop,
-  into,
-  map,
-  compose,
-} = require("ramda");
+const { find, prop, into, map, compose } = require("ramda");
 const {
   dp,
   dpEq,
@@ -22,7 +12,6 @@ const {
   invokeMap,
   upperFirst,
   intoArray,
-  sumBy,
 } = require("./index");
 const { describe, it } = require("mocha");
 

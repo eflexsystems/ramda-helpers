@@ -16,8 +16,6 @@ const {
   toUpper,
   useWith,
   into,
-  transduce,
-  add,
 } = require("ramda");
 
 /**
