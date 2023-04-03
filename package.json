@@ -1,6 +1,6 @@
 {
   "name": "@eflexsystems/ramda-helpers",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "A collection of ramda helper functions",
   "main": "index.js",
   "scripts": {
@@ -40,9 +40,6 @@
     "mocha": "^10.2.0",
     "ramda": "^0.29.0",
     "prettier": "^2.8.4"
-  },
-  "dependencies": {
-    "ramda": "^0.28.0"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
