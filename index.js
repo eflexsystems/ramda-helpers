@@ -19,6 +19,8 @@ const {
   into,
 } = require("ramda");
 
+const dotSplitter = split(".");
+
 /**
  * Retrieve the value at a given nested dotted path.
  *
@@ -33,7 +35,7 @@ const {
  * dp("a.b.0", {a: {b: [1, 2, 3]}}); //=> 1
  * dp("a.b.-2", {a: {b: [1, 2, 3]}}); //=> 2
  */
-exports.dp = useWith(path, [split(".")]);
+exports.dp = useWith(path, [dotSplitter]);
 
 /**
  * Determines whether a dotted path on an object has a specific value, in
@@ -55,7 +57,7 @@ exports.dp = useWith(path, [split(".")]);
  * R.filter(isFamous, users); //=> [ user1 ]
  *
  */
-exports.dpEq = useWith(pathEq, [identity, split(".")]);
+exports.dpEq = useWith(pathEq, [identity, dotSplitter]);
 
 /**
  * Makes a shallow clone of an object, setting or overriding the nodes required
@@ -76,7 +78,7 @@ exports.dpEq = useWith(pathEq, [identity, split(".")]);
  * assocDp('a.b.c', 42, {a: 5}); //=> {a: {b: {c: 42}}}
  *
  */
-exports.assocDp = useWith(assocPath, [split(".")]);
+exports.assocDp = useWith(assocPath, [dotSplitter]);
 
 /**
  * Returns a new list by plucking the same dotted path off all objects in
@@ -95,7 +97,7 @@ exports.assocDp = useWith(assocPath, [split(".")]);
  * dpPluck('name.first', [{name: { first: 'fred' }}, {name: { first: 'wilma'} }]); //=> ['fred', 'wilma']
  *
  */
-exports.dpPluck = curry((field, array) => map(exports.dp(field), array));
+exports.dpPluck = useWith(map, [exports.dp]);
 
 /**
  * Returns a list of tuples where the first item is the original item from the leftCollection
@@ -201,9 +203,7 @@ exports.minOf = curry((func, collection) =>
  * invokeMap("test", objs); //=> ["a", "b"]
  *
  */
-exports.invokeMap = curry((funcName, collection) =>
-  map(invoker(0, funcName), collection)
-);
+exports.invokeMap = useWith(map, [invoker(0)]);
 
 /**
  * Uppercases the first letter of a string
