@@ -282,7 +282,7 @@ describe("dpEq", function () {
       },
     };
 
-    const result = dpEq("a.b", 1, obj);
+    const result = dpEq(1, "a.b", obj);
 
     expect(result).to.be.true;
   });
@@ -301,7 +301,7 @@ describe("dpEq", function () {
       },
     ];
 
-    const result = find(dpEq("a.b", 2), objs);
+    const result = find(dpEq(2, "a.b"), objs);
 
     expect(result).to.equal(objs[1]);
   });

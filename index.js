@@ -15,6 +15,7 @@ const {
   split,
   toUpper,
   useWith,
+  identity,
   into,
 } = require("ramda");
 
@@ -54,7 +55,7 @@ exports.dp = useWith(path, [split(".")]);
  * R.filter(isFamous, users); //=> [ user1 ]
  *
  */
-exports.dpEq = useWith(pathEq, [split(".")]);
+exports.dpEq = useWith(pathEq, [identity, split(".")]);
 
 /**
  * Makes a shallow clone of an object, setting or overriding the nodes required
