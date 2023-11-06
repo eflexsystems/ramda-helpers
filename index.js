@@ -148,7 +148,7 @@ exports.leftJoin = curry(
       item,
       hashMap.get(String(exports.dp(leftComparedPath, item))) ?? null,
     ])(leftCollection);
-  }
+  },
 );
 
 /**
@@ -175,8 +175,8 @@ exports.maxOf = curry((func, collection) =>
       }
     },
     null,
-    collection
-  )
+    collection,
+  ),
 );
 
 /**
@@ -203,8 +203,8 @@ exports.minOf = curry((func, collection) =>
       }
     },
     null,
-    collection
-  )
+    collection,
+  ),
 );
 
 /**

@@ -110,9 +110,9 @@ describe("leftJoin", function () {
         map(([item, joined]) => ({
           item,
           joined,
-        }))
+        })),
       ),
-      collection
+      collection,
     );
 
     expect(result).to.deep.equal([
@@ -410,7 +410,7 @@ describe("intoArray", function () {
   it("is a shorthand for into([], compose(), arr ?? [])", function () {
     const result = intoArray(
       map((i) => i + 1),
-      map((i) => i * 2)
+      map((i) => i * 2),
     )([1, 2]);
 
     expect(result).to.deep.equal([4, 6]);
