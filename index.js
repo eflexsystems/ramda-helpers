@@ -1,6 +1,5 @@
 "use strict";
 const {
-  assocPath,
   compose,
   curry,
   forEach,
@@ -42,9 +41,10 @@ exports.dp = useWith(path, [dotSplitter]);
  * Retrieve the value at a given nested dotted path if it has a value otherwise return the default value.
  *
  * @func
+ * @param {*} default The default value
  * @param {String} path The dotted path to use.
  * @param {Object} obj The object to retrieve the nested property from.
- * @return {*} The data at `path`.
+ * @return {*} The data at `path` if it has a value otherwise the default value.
  * @example
  *
  * dpOr(1, "a.b", {a: {b: 2}}); //=> 2
@@ -59,8 +59,8 @@ exports.dpOr = useWith(pathOr, [identity, dotSplitter]);
  * [`R.equals`](#equals) terms. Most likely used to filter a list.
  *
  * @func
- * @param {String} path The dotted path of the nested property to use
  * @param {*} val The value to compare the nested property with
+ * @param {String} path The dotted path of the nested property to use
  * @param {Object} obj The object to check the nested property in
  * @return {Boolean} `true` if the value equals the nested object property,
  *         `false` otherwise.
@@ -70,32 +70,11 @@ exports.dpOr = useWith(pathOr, [identity, dotSplitter]);
  * const user2 = { address: { zipCode: 55555 } };
  * const user3 = { name: 'Bob' };
  * const users = [ user1, user2, user3 ];
- * const isFamous = dpEq('address.zipCode', 90210);
+ * const isFamous = dpEq(90210, 'address.zipCode');
  * R.filter(isFamous, users); //=> [ user1 ]
  *
  */
 exports.dpEq = useWith(pathEq, [identity, dotSplitter]);
-
-/**
- * Makes a shallow clone of an object, setting or overriding the nodes required
- * to create the given dotted path, and placing the specific value at the tail end of
- * that dotted path. Note that this copies and flattens prototype properties onto the
- * new object as well. All non-primitive properties are copied by reference.
- *
- * @func
- * @param {String} path The dotted path to set
- * @param {*} val The new value
- * @param {Object} obj The object to clone
- * @return {Object} A new object equivalent to the original except along the specified dotted path.
- * @example
- *
- * assocDp('a.b.c', 42, {a: {b: {c: 0}}}); //=> {a: {b: {c: 42}}}
- *
- * // Any missing or non-object keys in path will be overridden
- * assocDp('a.b.c', 42, {a: 5}); //=> {a: {b: {c: 42}}}
- *
- */
-exports.assocDp = useWith(assocPath, [dotSplitter]);
 
 /**
  * Returns a new list by plucking the same dotted path off all objects in
