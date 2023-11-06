@@ -1,18 +1,19 @@
 "use strict";
 const { expect } = require("chai");
 const { find, prop, into, map, compose } = require("ramda");
+const { describe, it } = require("mocha");
 const {
   dp,
   dpEq,
+  dpOr,
   dpPluck,
+  intoArray,
+  invokeMap,
   leftJoin,
   maxOf,
   minOf,
-  invokeMap,
   upperFirst,
-  intoArray,
 } = require("./index");
-const { describe, it } = require("mocha");
 
 describe("leftJoin", function () {
   it("returns an array of tuples with the joined objects", function () {
@@ -109,9 +110,9 @@ describe("leftJoin", function () {
         map(([item, joined]) => ({
           item,
           joined,
-        }))
+        })),
       ),
-      collection
+      collection,
     );
 
     expect(result).to.deep.equal([
@@ -328,6 +329,54 @@ describe("dpPluck", function () {
   });
 });
 
+describe("dpOr", function () {
+  it("returns a nested property of an object if that property has a value", function () {
+    const obj = {
+      a: {
+        b: 1,
+      },
+    };
+
+    const result = dpOr(2, "a.b", obj);
+
+    expect(result).to.equal(1);
+  });
+
+  it("returns the default value if a nested property of an object is null", function () {
+    const obj = {
+      a: {
+        b: null,
+      },
+    };
+
+    const result = dpOr(2, "a.b", obj);
+
+    expect(result).to.equal(2);
+  });
+
+  it("returns the default value if a nested property of an object is undefined", function () {
+    const obj = {
+      a: {
+        b: undefined,
+      },
+    };
+
+    const result = dpOr(2, "a.b", obj);
+
+    expect(result).to.equal(2);
+  });
+
+  it("returns the default value if a nested property of an object is not present", function () {
+    const obj = {
+      a: {},
+    };
+
+    const result = dpOr(2, "a.b", obj);
+
+    expect(result).to.equal(2);
+  });
+});
+
 describe("invokeMap", function () {
   it("plucks a nested property from an array", function () {
     const objs = [
@@ -361,7 +410,7 @@ describe("intoArray", function () {
   it("is a shorthand for into([], compose(), arr ?? [])", function () {
     const result = intoArray(
       map((i) => i + 1),
-      map((i) => i * 2)
+      map((i) => i * 2),
     )([1, 2]);
 
     expect(result).to.deep.equal([4, 6]);
