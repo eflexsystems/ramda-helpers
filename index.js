@@ -4,6 +4,8 @@ const {
   compose,
   curry,
   forEach,
+  identity,
+  into,
   invoker,
   join,
   lensIndex,
@@ -11,12 +13,11 @@ const {
   over,
   path,
   pathEq,
+  pathOr,
   reduce,
   split,
   toUpper,
   useWith,
-  identity,
-  into,
 } = require("ramda");
 
 const dotSplitter = split(".");
@@ -36,6 +37,22 @@ const dotSplitter = split(".");
  * dp("a.b.-2", {a: {b: [1, 2, 3]}}); //=> 2
  */
 exports.dp = useWith(path, [dotSplitter]);
+
+/**
+ * Retrieve the value at a given nested dotted path if it has a value otherwise return the default value.
+ *
+ * @func
+ * @param {String} path The dotted path to use.
+ * @param {Object} obj The object to retrieve the nested property from.
+ * @return {*} The data at `path`.
+ * @example
+ *
+ * dpOr(1, "a.b", {a: {b: 2}}); //=> 2
+ * dpOr(1, "a.b.", {c: {b: 2}}); //=> undefined
+ * dpOr(1, "a.b.1", {a: {b: [1, 2, 3]}}); //=> 2
+ * dpOr(1, "a.b.-2", {a: {b: [1, 2, 3]}}); //=> 2
+ */
+exports.dpOr = useWith(pathOr, [identity, dotSplitter]);
 
 /**
  * Determines whether a dotted path on an object has a specific value, in
