@@ -1,6 +1,6 @@
 {
   "name": "@eflexsystems/ramda-helpers",
-  "version": "6.0.0",
+  "version": "7.0.0",
   "description": "A collection of ramda helper functions",
   "exports": "./index.js",
   "type": "module",
