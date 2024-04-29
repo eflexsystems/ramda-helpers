@@ -2,7 +2,8 @@
   "name": "@eflexsystems/ramda-helpers",
   "version": "6.0.0",
   "description": "A collection of ramda helper functions",
-  "main": "index.js",
+  "exports": "./index.js",
+  "type": "module",
   "scripts": {
     "test": "mocha",
     "lint": "eslint .",
