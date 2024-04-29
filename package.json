@@ -30,6 +30,7 @@
     "ramda": "^0.30.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.1.1",
     "chai": "^4.1.1",
     "docdash": "^2.0.2",
     "eslint": "^9.1.1",
@@ -38,8 +39,8 @@
     "jsdoc": "^4.0.2",
     "lint-staged": "^15.0.2",
     "mocha": "^10.2.0",
-    "ramda": "^0.30.0",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "ramda": "^0.30.0"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
