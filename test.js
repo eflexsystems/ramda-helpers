@@ -1,8 +1,7 @@
-"use strict";
-const { expect } = require("chai");
-const { find, prop, into, map, compose } = require("ramda");
-const { describe, it } = require("mocha");
-const {
+import { expect } from "chai";
+import { find, prop, into, map, compose } from "ramda";
+import { describe, it } from "mocha";
+import {
   dp,
   dpEq,
   dpOr,
@@ -13,7 +12,7 @@ const {
   maxOf,
   minOf,
   upperFirst,
-} = require("./index");
+} from "./index.js";
 
 describe("leftJoin", function () {
   it("returns an array of tuples with the joined objects", function () {

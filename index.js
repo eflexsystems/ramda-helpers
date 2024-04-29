@@ -1,5 +1,4 @@
-"use strict";
-const {
+import {
   compose,
   curry,
   forEach,
@@ -17,7 +16,7 @@ const {
   split,
   toUpper,
   useWith,
-} = require("ramda");
+} from "ramda";
 
 const dotSplitter = split(".");
 
@@ -35,7 +34,7 @@ const dotSplitter = split(".");
  * dp("a.b.0", {a: {b: [1, 2, 3]}}); //=> 1
  * dp("a.b.-2", {a: {b: [1, 2, 3]}}); //=> 2
  */
-exports.dp = useWith(path, [dotSplitter]);
+export const dp = useWith(path, [dotSplitter]);
 
 /**
  * Retrieve the value at a given nested dotted path if it has a value otherwise return the default value.
@@ -52,7 +51,7 @@ exports.dp = useWith(path, [dotSplitter]);
  * dpOr(1, "a.b.1", {a: {b: [1, 2, 3]}}); //=> 2
  * dpOr(1, "a.b.-2", {a: {b: [1, 2, 3]}}); //=> 2
  */
-exports.dpOr = useWith(pathOr, [identity, dotSplitter]);
+export const dpOr = useWith(pathOr, [identity, dotSplitter]);
 
 /**
  * Determines whether a dotted path on an object has a specific value, in
@@ -74,7 +73,7 @@ exports.dpOr = useWith(pathOr, [identity, dotSplitter]);
  * R.filter(isFamous, users); //=> [ user1 ]
  *
  */
-exports.dpEq = useWith(pathEq, [identity, dotSplitter]);
+export const dpEq = useWith(pathEq, [identity, dotSplitter]);
 
 /**
  * Returns a new list by plucking the same dotted path off all objects in
@@ -93,7 +92,7 @@ exports.dpEq = useWith(pathEq, [identity, dotSplitter]);
  * dpPluck('name.first', [{name: { first: 'fred' }}, {name: { first: 'wilma'} }]); //=> ['fred', 'wilma']
  *
  */
-exports.dpPluck = useWith(map, [exports.dp]);
+export const dpPluck = useWith(map, [dp]);
 
 /**
  * Returns a list of tuples where the first item is the original item from the leftCollection
@@ -112,12 +111,12 @@ exports.dpPluck = useWith(map, [exports.dp]);
  * const result = leftJoin("id", rightCollection, "a", leftCollection); //=> [[{ a: "a", b: 2 }, { id: "a", c: 2 }]]
  *
  */
-exports.leftJoin = curry(
+export const leftJoin = curry(
   (rightComparedPath, rightCollection, leftComparedPath, leftCollection) => {
     const hashMap = new Map();
 
     forEach((item) => {
-      const key = exports.dp(rightComparedPath, item);
+      const key = dp(rightComparedPath, item);
       if (key) {
         hashMap.set(String(key), item);
       }
@@ -125,7 +124,7 @@ exports.leftJoin = curry(
 
     return map((item) => [
       item,
-      hashMap.get(String(exports.dp(leftComparedPath, item))) ?? null,
+      hashMap.get(String(dp(leftComparedPath, item))) ?? null,
     ])(leftCollection);
   },
 );
@@ -142,7 +141,7 @@ exports.leftJoin = curry(
  * maxOf(prop("a"), [{ a: 2 }, { a: 1 }, { a: null }]); //=> 2
  *
  */
-exports.maxOf = curry((func, collection) =>
+export const maxOf = curry((func, collection) =>
   reduce(
     (largest, curr) => {
       const val = func(curr);
@@ -170,7 +169,7 @@ exports.maxOf = curry((func, collection) =>
  * minOf(prop("a"), [{ a: 2 }, { a: 1 }, { a: null }]); //=> 1
  *
  */
-exports.minOf = curry((func, collection) =>
+export const minOf = curry((func, collection) =>
   reduce(
     (smallest, curr) => {
       const val = func(curr);
@@ -199,7 +198,7 @@ exports.minOf = curry((func, collection) =>
  * invokeMap("test", objs); //=> ["a", "b"]
  *
  */
-exports.invokeMap = useWith(map, [invoker(0)]);
+export const invokeMap = useWith(map, [invoker(0)]);
 
 /**
  * Uppercases the first letter of a string
@@ -212,7 +211,7 @@ exports.invokeMap = useWith(map, [invoker(0)]);
  * upperFirst("test"); //=> "Test"
  *
  */
-exports.upperFirst = compose(join(""), over(lensIndex(0), toUpper));
+export const upperFirst = compose(join(""), over(lensIndex(0), toUpper));
 
 /**
  * Is a shorthand for into([], compose(), arr ?? [])
@@ -226,4 +225,4 @@ exports.upperFirst = compose(join(""), over(lensIndex(0), toUpper));
  * intoArray(map(i => i + 1), map(i => i * 2), [1, 2])
  *
  */
-exports.intoArray = (...args) => into([], compose(...args));
+export const intoArray = (...args) => into([], compose(...args));
