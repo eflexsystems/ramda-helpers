@@ -31,7 +31,7 @@
     <input type="text" id="nav-search" placeholder="Search" />
     
     
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#assocDp">assocDp</a></li><li><a href="global.html#dp">dp</a></li><li><a href="global.html#dpEq">dpEq</a></li><li><a href="global.html#dpPluck">dpPluck</a></li><li><a href="global.html#intoArray">intoArray</a></li><li><a href="global.html#invokeMap">invokeMap</a></li><li><a href="global.html#leftJoin">leftJoin</a></li><li><a href="global.html#maxOf">maxOf</a></li><li><a href="global.html#minOf">minOf</a></li><li><a href="global.html#upperFirst">upperFirst</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#dp">dp</a></li><li><a href="global.html#dpEq">dpEq</a></li><li><a href="global.html#dpOr">dpOr</a></li><li><a href="global.html#dpPluck">dpPluck</a></li><li><a href="global.html#intoArray">intoArray</a></li><li><a href="global.html#invokeMap">invokeMap</a></li><li><a href="global.html#leftJoin">leftJoin</a></li><li><a href="global.html#maxOf">maxOf</a></li><li><a href="global.html#minOf">minOf</a></li><li><a href="global.html#upperFirst">upperFirst</a></li></ul>
     
 </nav>
 
@@ -47,12 +47,12 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>"use strict";
-const {
-  assocPath,
+            <pre class="prettyprint source linenums"><code>import {
   compose,
   curry,
   forEach,
+  identity,
+  into,
   invoker,
   join,
   lensIndex,
@@ -60,12 +60,14 @@ const {
   over,
   path,
   pathEq,
+  pathOr,
   reduce,
   split,
   toUpper,
   useWith,
-  into,
-} = require("ramda");
+} from "ramda";
+
+const dotSplitter = split(".");
 
 /**
  * Retrieve the value at a given nested dotted path.
@@ -81,15 +83,32 @@ const {
  * dp("a.b.0", {a: {b: [1, 2, 3]}}); //=> 1
  * dp("a.b.-2", {a: {b: [1, 2, 3]}}); //=> 2
  */
-exports.dp = useWith(path, [split(".")]);
+export const dp = useWith(path, [dotSplitter]);
+
+/**
+ * Retrieve the value at a given nested dotted path if it has a value otherwise return the default value.
+ *
+ * @func
+ * @param {*} default The default value
+ * @param {String} path The dotted path to use.
+ * @param {Object} obj The object to retrieve the nested property from.
+ * @return {*} The data at `path` if it has a value otherwise the default value.
+ * @example
+ *
+ * dpOr(1, "a.b", {a: {b: 2}}); //=> 2
+ * dpOr(1, "a.b.", {c: {b: 2}}); //=> undefined
+ * dpOr(1, "a.b.1", {a: {b: [1, 2, 3]}}); //=> 2
+ * dpOr(1, "a.b.-2", {a: {b: [1, 2, 3]}}); //=> 2
+ */
+export const dpOr = useWith(pathOr, [identity, dotSplitter]);
 
 /**
  * Determines whether a dotted path on an object has a specific value, in
  * [`R.equals`](#equals) terms. Most likely used to filter a list.
  *
  * @func
- * @param {String} path The dotted path of the nested property to use
  * @param {*} val The value to compare the nested property with
+ * @param {String} path The dotted path of the nested property to use
  * @param {Object} obj The object to check the nested property in
  * @return {Boolean} `true` if the value equals the nested object property,
  *         `false` otherwise.
@@ -99,32 +118,11 @@ exports.dp = useWith(path, [split(".")]);
  * const user2 = { address: { zipCode: 55555 } };
  * const user3 = { name: 'Bob' };
  * const users = [ user1, user2, user3 ];
- * const isFamous = dpEq('address.zipCode', 90210);
+ * const isFamous = dpEq(90210, 'address.zipCode');
  * R.filter(isFamous, users); //=> [ user1 ]
  *
  */
-exports.dpEq = useWith(pathEq, [split(".")]);
-
-/**
- * Makes a shallow clone of an object, setting or overriding the nodes required
- * to create the given dotted path, and placing the specific value at the tail end of
- * that dotted path. Note that this copies and flattens prototype properties onto the
- * new object as well. All non-primitive properties are copied by reference.
- *
- * @func
- * @param {String} path The dotted path to set
- * @param {*} val The new value
- * @param {Object} obj The object to clone
- * @return {Object} A new object equivalent to the original except along the specified dotted path.
- * @example
- *
- * assocDp('a.b.c', 42, {a: {b: {c: 0}}}); //=> {a: {b: {c: 42}}}
- *
- * // Any missing or non-object keys in path will be overridden
- * assocDp('a.b.c', 42, {a: 5}); //=> {a: {b: {c: 42}}}
- *
- */
-exports.assocDp = useWith(assocPath, [split(".")]);
+export const dpEq = useWith(pathEq, [identity, dotSplitter]);
 
 /**
  * Returns a new list by plucking the same dotted path off all objects in
@@ -143,7 +141,7 @@ exports.assocDp = useWith(assocPath, [split(".")]);
  * dpPluck('name.first', [{name: { first: 'fred' }}, {name: { first: 'wilma'} }]); //=> ['fred', 'wilma']
  *
  */
-exports.dpPluck = curry((field, array) => map(exports.dp(field), array));
+export const dpPluck = useWith(map, [dp]);
 
 /**
  * Returns a list of tuples where the first item is the original item from the leftCollection
@@ -162,12 +160,12 @@ exports.dpPluck = curry((field, array) => map(exports.dp(field), array));
  * const result = leftJoin("id", rightCollection, "a", leftCollection); //=> [[{ a: "a", b: 2 }, { id: "a", c: 2 }]]
  *
  */
-exports.leftJoin = curry(
+export const leftJoin = curry(
   (rightComparedPath, rightCollection, leftComparedPath, leftCollection) => {
     const hashMap = new Map();
 
     forEach((item) => {
-      const key = exports.dp(rightComparedPath, item);
+      const key = dp(rightComparedPath, item);
       if (key) {
         hashMap.set(String(key), item);
       }
@@ -175,9 +173,9 @@ exports.leftJoin = curry(
 
     return map((item) => [
       item,
-      hashMap.get(String(exports.dp(leftComparedPath, item))) ?? null,
+      hashMap.get(String(dp(leftComparedPath, item))) ?? null,
     ])(leftCollection);
-  }
+  },
 );
 
 /**
@@ -192,7 +190,7 @@ exports.leftJoin = curry(
  * maxOf(prop("a"), [{ a: 2 }, { a: 1 }, { a: null }]); //=> 2
  *
  */
-exports.maxOf = curry((func, collection) =>
+export const maxOf = curry((func, collection) =>
   reduce(
     (largest, curr) => {
       const val = func(curr);
@@ -204,8 +202,8 @@ exports.maxOf = curry((func, collection) =>
       }
     },
     null,
-    collection
-  )
+    collection,
+  ),
 );
 
 /**
@@ -220,7 +218,7 @@ exports.maxOf = curry((func, collection) =>
  * minOf(prop("a"), [{ a: 2 }, { a: 1 }, { a: null }]); //=> 1
  *
  */
-exports.minOf = curry((func, collection) =>
+export const minOf = curry((func, collection) =>
   reduce(
     (smallest, curr) => {
       const val = func(curr);
@@ -232,8 +230,8 @@ exports.minOf = curry((func, collection) =>
       }
     },
     null,
-    collection
-  )
+    collection,
+  ),
 );
 
 /**
@@ -249,9 +247,7 @@ exports.minOf = curry((func, collection) =>
  * invokeMap("test", objs); //=> ["a", "b"]
  *
  */
-exports.invokeMap = curry((funcName, collection) =>
-  map(invoker(0, funcName), collection)
-);
+export const invokeMap = useWith(map, [invoker(0)]);
 
 /**
  * Uppercases the first letter of a string
@@ -264,7 +260,7 @@ exports.invokeMap = curry((funcName, collection) =>
  * upperFirst("test"); //=> "Test"
  *
  */
-exports.upperFirst = compose(join(""), over(lensIndex(0), toUpper));
+export const upperFirst = compose(join(""), over(lensIndex(0), toUpper));
 
 /**
  * Is a shorthand for into([], compose(), arr ?? [])
@@ -278,7 +274,7 @@ exports.upperFirst = compose(join(""), over(lensIndex(0), toUpper));
  * intoArray(map(i => i + 1), map(i => i * 2), [1, 2])
  *
  */
-exports.intoArray = (...args) => into([], compose(...args));
+export const intoArray = (...args) => into([], compose(...args));
 </code></pre>
         </article>
     </section>
@@ -293,7 +289,7 @@ exports.intoArray = (...args) => into([], compose(...args));
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Tue Mar 14 2023 14:45:58 GMT-0400 (Eastern Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Mon Apr 29 2024 15:23:22 GMT-0400 (Eastern Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
